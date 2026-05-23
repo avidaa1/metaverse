@@ -409,6 +409,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Co
 #wz-xp-track{width:200px;height:3px;background:rgba(255,200,0,.1);border:1px solid rgba(255,200,0,.2);}
 #wz-xp-fill{height:100%;background:#ffcc00;transition:width .3s;}
 /* WARZONE READY */
+
+/* WZ OBJECTIVE ARROWS */
+#wz-arrows{position:fixed;inset:0;pointer-events:none;display:none;z-index:250;}
+.wz-arrow{position:absolute;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:16px;transition:transform .1s,opacity .2s;}
+.wz-arrow span{display:block;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:18px solid currentColor;filter:drop-shadow(0 0 4px currentColor);}
+.wz-arrow-label{position:absolute;font-family:'Courier New',monospace;font-size:7px;letter-spacing:1px;white-space:nowrap;top:22px;left:50%;transform:translateX(-50%);}
+/* WZ CONTROLS HINT */
+#wz-hint{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.5);text-align:center;pointer-events:none;transition:opacity 1s;z-index:250;display:none;}
 #wz-ready{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:490;display:none;align-items:center;justify-content:center;flex-direction:column;font-family:'Courier New',monospace;backdrop-filter:blur(8px);}
 #wz-ready.on{display:flex;}
 .wzr-title{font-size:clamp(32px,7vw,72px);font-weight:900;letter-spacing:10px;color:#ff4444;text-shadow:0 0 40px #ff440088;margin-bottom:4px;}
@@ -471,8 +479,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Co
 #chaos-start-btn:hover{background:rgba(255,136,0,.18);color:#fff;border-color:#ffcc00;box-shadow:0 0 28px rgba(255,136,0,.4);}
 #chaos-fall-flash{position:absolute;inset:0;background:rgba(255,50,50,0);pointer-events:none;transition:background .1s;}
 /* IN-GAME MENU */
-#igm-btn{position:fixed;top:14px;left:14px;z-index:310;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-family:'Courier New',monospace;font-size:9px;letter-spacing:2px;padding:6px 12px;cursor:pointer;backdrop-filter:blur(4px);transition:all .2s;display:none;}
-#igm-btn:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4);}
+#igm-btn{position:fixed;top:12px;left:12px;z-index:310;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.8);font-family:'Courier New',monospace;font-size:9px;letter-spacing:2px;padding:7px 14px;cursor:pointer;backdrop-filter:blur(6px);transition:all .2s;display:none;user-select:none;}
+#igm-btn:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.55);box-shadow:0 0 10px rgba(255,255,255,.1);}
 #igm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:500;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;font-family:'Courier New',monospace;backdrop-filter:blur(6px);}
 #igm-overlay.on{display:flex;}
 .igm-title{color:rgba(255,255,255,.5);font-size:10px;letter-spacing:5px;margin-bottom:8px;}
@@ -988,22 +996,52 @@ filter:drop-shadow(0 0 2px rgba(0,0,0,.9));transition:all .08s;}
 <!-- WARZONE READY / LOADOUT -->
 <div id="wz-ready">
   <div class="wzr-title">WARZONE</div>
-  <div class="wzr-sub">SOLO · BATTLE ROYALE · SURVIVE OR EXTRACT</div>
-  <div style="color:rgba(255,255,255,.35);font-size:9px;letter-spacing:2px;margin-bottom:12px;text-align:center;max-width:400px;line-height:2;">
-    Storm closes in. 3 AI squads hunt you.<br>
-    Loot supply crates. Commandeer the jeep.<br>
-    Complete objectives. Reach extraction alive.
+  <div class="wzr-sub">SOLO BATTLE ROYALE</div>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;max-width:520px;margin:10px 0;">
+    <div style="flex:1;min-width:140px;border:1px solid rgba(255,68,68,.2);padding:10px 12px;">
+      <div style="color:#ff6666;font-size:8px;letter-spacing:3px;margin-bottom:6px;">1 · LOOT</div>
+      <div style="color:rgba(255,255,255,.45);font-size:9px;line-height:1.8;">Find 2 supply crates<br>Look for <b style="color:#ffcc00">gold beacons</b> in the sky<br>Press <b>E</b> to loot</div>
+    </div>
+    <div style="flex:1;min-width:140px;border:1px solid rgba(255,68,68,.2);padding:10px 12px;">
+      <div style="color:#ff6666;font-size:8px;letter-spacing:3px;margin-bottom:6px;">2 · ELIMINATE</div>
+      <div style="color:rgba(255,255,255,.45);font-size:9px;line-height:1.8;">3 AI squads patrol island<br>Press <b>SPACE</b> to shoot<br>Press <b>R</b> to reload</div>
+    </div>
+    <div style="flex:1;min-width:140px;border:1px solid rgba(255,68,68,.2);padding:10px 12px;">
+      <div style="color:#ff6666;font-size:8px;letter-spacing:3px;margin-bottom:6px;">3 · EXTRACT</div>
+      <div style="color:rgba(255,255,255,.45);font-size:9px;line-height:1.8;">Find the <b style="color:#00ff88">green beacon</b><br>Reach it with 2 crates looted<br>Storm closes every 90s</div>
+    </div>
   </div>
-  <div style="color:rgba(255,200,0,.55);font-size:9px;letter-spacing:4px;margin-bottom:8px;">SELECT LOADOUT</div>
-  <div id="wz-loadout">
-    <button class="wz-load-btn sel" id="wz-load-ar" onclick="wzSelectLoadout('ar')"><span>AR</span>Assault Rifle<br><small style="color:rgba(255,255,255,.3)">Balanced</small></button>
-    <button class="wz-load-btn" id="wz-load-sniper" onclick="wzSelectLoadout('sniper')"><span>SR</span>Sniper Rifle<br><small style="color:rgba(255,255,255,.3)">Long range</small></button>
-    <button class="wz-load-btn" id="wz-load-shotgun" onclick="wzSelectLoadout('shotgun')"><span>SG</span>Shotgun<br><small style="color:rgba(255,255,255,.3)">Close combat</small></button>
-    <button class="wz-load-btn" id="wz-load-smg" onclick="wzSelectLoadout('smg')"><span>SMG</span>Submachine Gun<br><small style="color:rgba(255,255,255,.3)">Fast fire</small></button>
+
+  <div style="background:rgba(255,68,68,.06);border:1px solid rgba(255,68,68,.2);padding:8px 20px;font-size:9px;color:rgba(255,200,200,.6);letter-spacing:1px;text-align:center;max-width:400px;">
+    ⚠ Stay inside the storm ring or take damage · Ring shrinks in 5 stages
   </div>
-  <div style="color:rgba(255,255,255,.2);font-size:8px;letter-spacing:2px;margin-bottom:12px;text-align:center;">WASD MOVE · SPACE SHOOT · E ENTER/LOOT · C PRONE · ESC MENU</div>
-  <button id="wz-deploy-btn" onclick="deployWarzone()">&#9650; DEPLOY</button>
+
+  <div style="font-size:9px;color:rgba(255,255,255,.25);letter-spacing:2px;margin-top:6px;text-align:center;">
+    WASD move · SPACE shoot · E loot/vehicle · C prone · R reload
+  </div>
+
+  <div id="wz-loadout" style="margin-top:10px;">
+    <div style="color:rgba(255,200,0,.55);font-size:8px;letter-spacing:3px;text-align:center;margin-bottom:6px;">CHOOSE LOADOUT</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <button class="wz-load-btn sel" id="wz-load-ar" onclick="wzSelectLoadout('ar')"><span>AR</span>Assault Rifle</button>
+      <button class="wz-load-btn" id="wz-load-sniper" onclick="wzSelectLoadout('sniper')"><span>SR</span>Sniper</button>
+      <button class="wz-load-btn" id="wz-load-shotgun" onclick="wzSelectLoadout('shotgun')"><span>SG</span>Shotgun</button>
+      <button class="wz-load-btn" id="wz-load-smg" onclick="wzSelectLoadout('smg')"><span>SMG</span>Submachine</button>
+    </div>
+  </div>
+
+  <button id="wz-deploy-btn" onclick="deployWarzone()">&#9650; DROP IN</button>
 </div>
+
+<!-- WZ DIRECTION ARROWS -->
+<div id="wz-arrows">
+  <div class="wz-arrow" id="wza-crate" style="color:#ffcc00;"><span></span><div class="wz-arrow-label" style="color:#ffcc00;">CRATE</div></div>
+  <div class="wz-arrow" id="wza-extract" style="color:#00ff88;"><span></span><div class="wz-arrow-label" style="color:#00ff88;">EXTRACT</div></div>
+  <div class="wz-arrow" id="wza-enemy" style="color:#ff4444;"><span></span><div class="wz-arrow-label" style="color:#ff4444;">ENEMY</div></div>
+</div>
+<!-- WZ HINT -->
+<div id="wz-hint">WASD MOVE &nbsp;·&nbsp; SPACE SHOOT &nbsp;·&nbsp; E LOOT/VEHICLE &nbsp;·&nbsp; R RELOAD &nbsp;·&nbsp; C PRONE</div>
 <!-- WARZONE HUD -->
 <div id="wz-hud">
   <div id="wz-storm-wrap">
@@ -1043,6 +1081,37 @@ filter:drop-shadow(0 0 2px rgba(0,0,0,.9));transition:all .08s;}
     <button onclick="wzBackToLoadout();"  style="background:transparent;border:1px solid #ff444488;color:#ff8888;padding:10px 24px;cursor:pointer;font-family:Courier New,monospace;font-size:10px;letter-spacing:4px;">REDEPLOY</button>
     <button onclick="wzBackToLoadout()" style="background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);padding:10px 24px;cursor:pointer;font-family:Courier New,monospace;font-size:10px;letter-spacing:4px;">MENU</button>
   </div>
+</div>
+
+<!-- SURVIVAL READY -->
+<div id="surv-ready" style="position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:490;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;font-family:'Courier New',monospace;backdrop-filter:blur(6px);">
+  <div style="font-size:clamp(24px,5vw,50px);font-weight:900;letter-spacing:8px;color:#ff4455;text-shadow:0 0 28px #ff4455;">SURVIVAL</div>
+  <div style="font-size:9px;letter-spacing:4px;color:rgba(255,68,85,.45);">WAVE DEFENSE · ISLAND</div>
+  <div style="color:rgba(255,255,255,.4);font-size:10px;letter-spacing:1px;text-align:center;max-width:380px;line-height:2.1;border-top:1px solid rgba(255,68,85,.2);border-bottom:1px solid rgba(255,68,85,.2);padding:12px 20px;margin:6px 0;">
+    Waves of AI hunters close in from all directions.<br>
+    Each wave is harder. Survive as long as possible.<br>
+    <span style="color:rgba(255,100,100,.7);">10 AI levels — STALKER → TITAN</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:3px;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,.3);">
+    <div><b style="color:rgba(255,255,255,.6);">WASD</b> move &nbsp;·&nbsp; <b style="color:rgba(255,255,255,.6);">SPACE</b> jump &nbsp;·&nbsp; <b style="color:rgba(255,255,255,.6);">MOUSE</b> camera</div>
+    <div><b style="color:rgba(255,255,255,.6);">E</b> grab / interact &nbsp;·&nbsp; colored beacons = enemy level</div>
+  </div>
+  <button onclick="document.getElementById('surv-ready').style.display='none';gameActive=true;setTimeout(()=>{_survivalActive=true;spawnAI(0,1);document.getElementById('hud-wave').style.display='block';},500);" style="background:transparent;border:2px solid #ff4455;color:#ff4455;font-family:'Courier New',monospace;font-size:14px;letter-spacing:6px;padding:12px 40px;cursor:pointer;margin-top:6px;transition:all .2s;" onmouseover="this.style.background='rgba(255,68,85,.15)'" onmouseout="this.style.background='transparent'">&#9654; &nbsp; DEPLOY</button>
+</div>
+<!-- HIDESEEK READY -->
+<div id="hs-ready" style="position:fixed;inset:0;background:rgba(0,0,0,.87);z-index:490;display:none;align-items:center;justify-content:center;flex-direction:column;gap:10px;font-family:'Courier New',monospace;backdrop-filter:blur(6px);">
+  <div style="font-size:clamp(24px,5vw,50px);font-weight:900;letter-spacing:8px;color:#ffcc00;text-shadow:0 0 28px #ffcc00;">HIDE & SEEK</div>
+  <div style="font-size:9px;letter-spacing:4px;color:rgba(255,200,0,.45);">STEALTH · EVASION · RACE</div>
+  <div style="color:rgba(255,255,255,.4);font-size:10px;letter-spacing:1px;text-align:center;max-width:380px;line-height:2.1;border-top:1px solid rgba(255,200,0,.2);border-bottom:1px solid rgba(255,200,0,.2);padding:12px 20px;margin:6px 0;">
+    One AI guard patrols the island.<br>
+    Stay out of its vision cone. Reach safe zones (blue discs).<br>
+    <span style="color:rgba(255,200,0,.7);">If spotted — race to the home post before it catches you.</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:3px;font-size:9px;letter-spacing:1px;color:rgba(255,255,255,.3);">
+    <div><b style="color:rgba(255,255,255,.6);">WASD</b> move quietly &nbsp;·&nbsp; <b style="color:rgba(255,255,255,.6);">MOUSE</b> camera</div>
+    <div>Green cone = safe &nbsp;·&nbsp; Red cone = detected &nbsp;·&nbsp; Blue disc = safe zone</div>
+  </div>
+  <button onclick="document.getElementById('hs-ready').style.display='none';gameActive=true;" style="background:transparent;border:2px solid #ffcc00;color:#ffcc00;font-family:'Courier New',monospace;font-size:14px;letter-spacing:6px;padding:12px 40px;cursor:pointer;margin-top:6px;transition:all .2s;" onmouseover="this.style.background='rgba(255,200,0,.15)'" onmouseout="this.style.background='transparent'">&#9654; &nbsp; HIDE</button>
 </div>
 <!-- PAC-MAN READY -->
 <div id="pm-ready">
@@ -2109,8 +2178,15 @@ function buildScene(){
   ldSet(96,'SPAWNING PLAYER...');
   buildPlayer();
   buildCameras();
-  if(gameMode==='survival') buildAIRobot();
-  else if(gameMode==='hideseek') buildHideAndSeek();
+  if(gameMode==='survival'){
+    gameActive=false;
+    buildAIRobot();
+    setTimeout(()=>{document.getElementById('surv-ready').style.display='flex';showIGMBtn(true);},800);
+  }
+  else if(gameMode==='hideseek'){
+    gameActive=false;
+    setTimeout(()=>{buildHideAndSeek();document.getElementById('hs-ready').style.display='flex';showIGMBtn(true);},800);
+  }
   else if(gameMode==='fps') buildFPSWorld();
   else if(gameMode==='vr_training') showVRMissionSelect();
   else if(gameMode==='chaos') buildChaosDome();
@@ -2121,6 +2197,7 @@ function buildScene(){
 
   scene.registerBeforeRender(gameLoop);
   scene.registerAfterRender(drawMinimap);
+  showIGMBtn(true); // permanent in all modes
 
   ldSet(100,'WELCOME TO AVIDAA METAVERSE');
   setTimeout(()=>{
@@ -3618,8 +3695,6 @@ function gameLoop(){
   // FPS mode: cam1 handles its own movement via UniversalCamera inputs
   if(gameMode==='fps'){updateFPS();return;}
   if(gameMode==='pacman'){updatePacMan();return;}
-  if(gameMode==='chaos'){updateChaos();return;}
-  if(gameMode==='warzone'){updateWarzone();return;}
   if(gameMode==='kingcliff'){updateKCL();return;}
   const SPEED=9;
   let fwd,right;
@@ -3684,7 +3759,7 @@ function gameLoop(){
   else if(gameMode==='fps')updateFPS();
   else if(gameMode==='vr_training')updateVR();
   else if(gameMode==='chaos')updateChaos();
-  // mode bypasses handled above
+  else if(gameMode==='warzone')updateWarzone();
   // Score tick (1 pt/sec survival)
   if(gameActive){
     scoreTick+=engine.getDeltaTime();
@@ -3865,11 +3940,7 @@ window.smSaveAvatar=function(){
 };
 window.selectMode=function(mode){
   gameMode=mode;
-  if(typeof PREG_DEFS!=='undefined'&&PREG_DEFS[mode]){
-    showPreGame(PREG_DEFS[mode],()=>window.startGame());
-  }else{
-    window.startGame();
-  }
+  window.startGame();
 };
 
 window.startGame=function(){
@@ -4686,6 +4757,8 @@ function buildFPSWorld(){
 
   // Show FPS HUD
   document.getElementById('fps-hud').style.display='block';
+  showIGMBtn(true);
+  showIGMBtn(true);
   // Hide other HUDs
   ['hud-wave','hud-score','hud-ai-arrow','hud-jetpack'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.style.display='none';
@@ -6201,9 +6274,50 @@ function buildRumiBody(root){
 
 
 // ── IN-GAME MENU ──────────────────────────────────────────────
+
+// ── PERSISTENT IGM HELPERS ─────────────────────────────────
+function igmRestart(){
+  if(gameMode==='chaos'){cleanupChaosDome();gameMode='chaos';buildChaosDome();}
+  else if(gameMode==='pacman'){cleanupPacMan();buildPacManWorld();}
+  else if(gameMode==='warzone'){cleanupWarzone();buildWarzoneWorld();}
+  else if(gameMode==='kingcliff'){cleanupKCL();buildKingCliff();}
+  else if(gameMode==='fps'){buildFPSWorld();}
+  else if(gameMode==='vr_training'){showVRMissionSelect();}
+  else restartGame();
+}
+
+function igmBackToGameMenu(){
+  // Return to THIS mode's own ready/lobby screen
+  if(gameMode==='survival'){
+    gameActive=false;
+    document.getElementById('surv-ready').style.display='flex';
+  } else if(gameMode==='hideseek'){
+    gameActive=false;
+    document.getElementById('hs-ready').style.display='flex';
+  } else if(gameMode==='warzone'){
+    wzBackToLoadout();
+  } else if(gameMode==='pacman'){
+    cleanupPacMan();buildPacManWorld();
+  } else if(gameMode==='chaos'){
+    cleanupChaosDome();gameMode='chaos';buildChaosDome();
+  } else if(gameMode==='kingcliff'){
+    kclBack();
+  } else if(gameMode==='fps'){
+    buildFPSWorld();
+  } else if(gameMode==='vr_training'){
+    showVRMissionSelect();
+  }
+}
+
 function toggleIGM(){
   const ov=document.getElementById('igm-overlay');
   if(ov)ov.classList.toggle('on');
+  // Update mode label
+  const modeNames={survival:'SURVIVAL',hideseek:'HIDE & SEEK',fps:'FPS SHOOTER',
+    vr_training:'VR TRAINING',chaos:'CHAOS DOME',warzone:'WARZONE',
+    kingcliff:'KING OF THE CLIFF',pacman:'BITCOIN PAC-MAN'};
+  const lbl=document.getElementById('igm-mode-label');
+  if(lbl)lbl.textContent=modeNames[gameMode]||'PAUSED';
   // Release pointer lock when menu opens
   if(ov&&ov.classList.contains('on')){
     try{document.exitPointerLock();}catch(e){}
@@ -7108,7 +7222,10 @@ function wzSelectLoadout(type){
 }
 
 window.deployWarzone=function(){
-  document.getElementById('wz-ready').classList.remove('on');document.getElementById('kcl-ready').classList.remove('on');
+  document.getElementById('wz-ready').classList.remove('on');
+  document.getElementById('wz-arrows').style.display='block';
+  const hint=document.getElementById('wz-hint');
+  if(hint){hint.style.display='block';hint.style.opacity='1';setTimeout(()=>{hint.style.opacity='0';setTimeout(()=>hint.style.display='none',1000);},8000);}document.getElementById('kcl-ready').classList.remove('on');
   gameActive=true;
   _wzCurWeapon=_wzLoadout;
   _wzAmmo={ar:30,sniper:5,shotgun:8,smg:35,pistol:999};
@@ -7146,13 +7263,21 @@ function buildWarzoneWorld(){
   wzBuildJeep(-8,-5);
 
   // Extraction point
-  const ext=BABYLON.MeshBuilder.CreateCylinder('wzExt',{height:.1,diameter:5,tessellation:32},scene);
+  // Extraction zone
+  const ext=BABYLON.MeshBuilder.CreateCylinder('wzExt',{height:.1,diameter:7,tessellation:32},scene);
   ext.position.set(18,0.1,18);ext.isPickable=false;_wzMeshes.push(ext);
-  const extM=new BABYLON.StandardMaterial('wzExtM',scene);
-  extM.emissiveColor=new BABYLON.Color3(.1,1,.4);extM.alpha=.5;ext.material=extM;
-  const extRing=BABYLON.MeshBuilder.CreateTorus('wzExtR',{diameter:5.5,thickness:.2,tessellation:32},scene);
+  const extM=new BABYLON.StandardMaterial('wzExtM',scene);extM.emissiveColor=new BABYLON.Color3(.1,1,.4);extM.alpha=.4;ext.material=extM;
+  const extRing=BABYLON.MeshBuilder.CreateTorus('wzExtR',{diameter:7.5,thickness:.25,tessellation:32},scene);
   extRing.position.set(18,.2,18);extRing.isPickable=false;_wzMeshes.push(extRing);
   const extRM=new BABYLON.StandardMaterial('wzExtRM',scene);extRM.emissiveColor=new BABYLON.Color3(0,1,.5);extRing.material=extRM;
+  // Tall extraction pillar
+  const extPillar=BABYLON.MeshBuilder.CreateCylinder('wzExtPillar',{height:30,diameter:.2,tessellation:6},scene);
+  extPillar.position.set(18,15,18);extPillar.isPickable=false;_wzMeshes.push(extPillar);
+  const epM=new BABYLON.StandardMaterial('wzEPM',scene);epM.emissiveColor=new BABYLON.Color3(0,1,.5);epM.alpha=.65;extPillar.material=epM;
+  // Extraction text disc
+  const extDisc=BABYLON.MeshBuilder.CreateCylinder('wzExtDisc',{height:.08,diameter:5,tessellation:32},scene);
+  extDisc.position.set(18,30,18);extDisc.isPickable=false;_wzMeshes.push(extDisc);
+  const edM=new BABYLON.StandardMaterial('wzEDM',scene);edM.emissiveColor=new BABYLON.Color3(0,1,.5);extDisc.material=edM;
   scene._wzExtPos=new BABYLON.Vector3(18,0,18);
 
   // AI Squads (3 squads × 3 members)
@@ -7203,10 +7328,15 @@ function wzBuildCrate(x,z,idx){
   const stripe=BABYLON.MeshBuilder.CreateBox('wzCrS'+idx,{width:1.42,height:.2,depth:1.02},scene);
   stripe.parent=root;stripe.position.y=.5;stripe.isPickable=false;_wzMeshes.push(stripe);
   const sM=new BABYLON.StandardMaterial('wzCrSM'+idx,scene);sM.emissiveColor=new BABYLON.Color3(.9,.75,0);stripe.material=sM;
-  // Glow pulse marker above crate
-  const marker=BABYLON.MeshBuilder.CreateSphere('wzCrMk'+idx,{diameter:.3,segments:6},scene);
-  marker.parent=root;marker.position.y=1.8;marker.isPickable=false;_wzMeshes.push(marker);
-  const mM=new BABYLON.StandardMaterial('wzCrMkM'+idx,scene);mM.emissiveColor=new BABYLON.Color3(.9,.75,0);marker.material=mM;
+  // Tall beacon pillar — visible from anywhere on map
+  const beacon=BABYLON.MeshBuilder.CreateCylinder('wzBeacon'+idx,{height:28,diameter:.15,tessellation:6},scene);
+  beacon.parent=root;beacon.position.y=14;beacon.isPickable=false;_wzMeshes.push(beacon);
+  const bcnM=new BABYLON.StandardMaterial('wzBcnM'+idx,scene);bcnM.emissiveColor=new BABYLON.Color3(1,.85,0);bcnM.alpha=.7;beacon.material=bcnM;
+  // Pulse ring at top
+  const ring=BABYLON.MeshBuilder.CreateTorus('wzBRing'+idx,{diameter:1.2,thickness:.12,tessellation:16},scene);
+  ring.parent=root;ring.position.y=28;ring.isPickable=false;_wzMeshes.push(ring);
+  const bRingM=new BABYLON.StandardMaterial('wzBRM'+idx,scene);bRingM.emissiveColor=new BABYLON.Color3(1,.9,0);ring.material=bRingM;
+  const marker=ring; // reuse ref for looted check
   const weapons=['ar','sniper','shotgun'];
   _wzCrates.push({root,looted:false,weapon:weapons[idx%3],markerMesh:marker,idx});
 }
@@ -7418,6 +7548,45 @@ function updateWarzone(){
   // Vehicle proximity hint
   const vHint=document.getElementById('wz-vehicle-hint');
   if(vHint)vHint.style.display=(_wzJeep&&!_wzInVehicle&&wzNearJeep())?'block':'none';
+
+  // ── Direction arrows ────────────────────────────────────────
+  if(player&&scene.activeCamera){
+    const pp=player.position;
+    const camFwd=cam3?cam3.getForwardRay(1).direction:new BABYLON.Vector3(0,0,1);
+    const camRight=new BABYLON.Vector3(camFwd.z,0,-camFwd.x);
+    // Find nearest unlooted crate
+    let nearCrate=null,nearDist=9999;
+    _wzCrates.forEach(c=>{if(!c.looted){const d=BABYLON.Vector3.Distance(pp,c.root.position);if(d<nearDist){nearDist=d;nearCrate=c;}}});
+    // Arrow helper
+    function updateArrow(id,target){
+      const el=document.getElementById(id);if(!el||!target)return;
+      const dx=target.x-pp.x,dz=target.z-pp.z;
+      const dot=dx*camFwd.x+dz*camFwd.z;
+      const cross=dx*camRight.x+dz*camRight.z;
+      const ang=Math.atan2(cross,dot)*(180/Math.PI);
+      const cx=window.innerWidth/2,cy=window.innerHeight/2;
+      const margin=70;
+      const sx=Math.cos((ang-90)*Math.PI/180),sy=Math.sin((ang-90)*Math.PI/180);
+      const rx=cx+sx*Math.min(cx-margin,Math.abs(sx*(cx-margin)));
+      const ry=cy+sy*Math.min(cy-margin,Math.abs(sy*(cy-margin)));
+      el.style.left=(Math.max(margin,Math.min(window.innerWidth-margin,cx+sx*(cx-margin))));
+      el.style.top=(Math.max(margin,Math.min(window.innerHeight-margin,cy+sy*(cy-margin))));
+      el.style.transform=`translate(-50%,-50%) rotate(${ang}deg)`;
+      el.style.left=Math.max(margin,Math.min(window.innerWidth-margin,cx+sx*(cx-margin)))+'px';
+      el.style.top=Math.max(margin,Math.min(window.innerHeight-margin,cy+sy*(cy-margin)))+'px';
+      const dist=Math.sqrt(dx*dx+dz*dz);
+      const lbl=el.querySelector('.wz-arrow-label');
+      if(lbl)lbl.textContent=Math.round(dist)+'m';
+    }
+    if(nearCrate)updateArrow('wza-crate',nearCrate.root.position);
+    else{const el=document.getElementById('wza-crate');if(el)el.style.opacity='0';}
+    updateArrow('wza-extract',scene._wzExtPos);
+    // Nearest active enemy
+    let nearEnemy=null,nearEd=9999;
+    _wzSquads.forEach(sq=>sq.members.forEach(m=>{if(!m.dead){const d=BABYLON.Vector3.Distance(pp,m.root.position);if(d<nearEd){nearEd=d;nearEnemy=m.root.position;}}}));
+    if(nearEnemy)updateArrow('wza-enemy',nearEnemy);
+    else{const el=document.getElementById('wza-enemy');if(el)el.style.opacity='0';}
+  }
   // Cam track player or jeep
   if(cam3){
     const tgt=_wzInVehicle?_wzJeep.root.position:player?.position;
@@ -7596,6 +7765,7 @@ function cleanupWarzone(){
   // shared glow/pipeline — not disposed on warzone exit
   if(_wzKeyH){document.removeEventListener('keydown',_wzKeyH);_wzKeyH=null;}
   document.getElementById('wz-hud').style.display='none';
+  const wzArr=document.getElementById('wz-arrows');if(wzArr)wzArr.style.display='none';
   document.getElementById('wz-ready').classList.remove('on');document.getElementById('kcl-ready').classList.remove('on');
   document.getElementById('wz-end').classList.remove('on');
   scene.fogMode=BABYLON.Scene.FOGMODE_NONE;
